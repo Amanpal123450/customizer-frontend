@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+
+
 
 const generateCaptcha = (length = 6) =>
   Math.random().toString(36).slice(2, 2 + length).toUpperCase();
@@ -36,7 +39,7 @@ const Login = () => {
 //   if (token) {
 //     // ✅ Logged-in Cart
 //     try {
-//       const res = await fetch(`https://e-com-customizer.onrender.com/api/v1/addToCart/${id}`, {
+//       const res = await fetch(`https://backend-customizer.onrender.com/api/v1/addToCart/${id}`, {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -69,12 +72,12 @@ const Login = () => {
   e.preventDefault();
 
   if (formData.captchaInput !== captchaCode) {
-    alert("Invalid captcha");
+    toast.error("Invalid captcha");
     return;
   }
 
   try {
-    const res = await fetch("https://e-com-customizer.onrender.com/api/v1/login", {
+    const res = await fetch("https://backend-customizer.onrender.com/api/v1/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -86,7 +89,7 @@ const Login = () => {
     const data = await res.json();
     console.log(data)
     if (!data.token) {
-      alert("Login failed: " + data.message);
+      toast.error("Login failed: " + data.message);
       return;
     }
 
@@ -99,7 +102,7 @@ const Login = () => {
 
     if (guestCart.length > 0) {
       for (const item of guestCart) {
-        await fetch(`https://e-com-customizer.onrender.com/api/v1/addToCart/${item._id}`, {
+        await fetch(`https://backend-customizer.onrender.com/api/v1/addToCart/${item._id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -118,7 +121,7 @@ const guestWishlist = JSON.parse(localStorage.getItem("guest_wishlist")) || [];
 
 if (guestWishlist.length > 0) {
   for (const item of guestWishlist) {
-    await fetch(`https://e-com-customizer.onrender.com/api/v1/addToWishlist/${item._id}`, {
+    await fetch(`https://backend-customizer.onrender.com/api/v1/addToWishlist/${item._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -130,11 +133,11 @@ if (guestWishlist.length > 0) {
   console.log("Guest wishlist synced to server");
   localStorage.removeItem("guest_wishlist"); // ✅ Correct key
 }
-    alert("Login successful!");
+    toast.success("Login successful!");
     navigation.push("/");
 
   } catch (error) {
-    alert("Login error: " + error.message);
+    toast.error("Login error: " + error.message);
     console.error(error);
   }
 };

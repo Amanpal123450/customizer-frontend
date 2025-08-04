@@ -4,6 +4,7 @@ import React from "react";
 
 import AllSection from "../app/new/page";
 import Navbar from "./COMMON/Navbar";
+import Toaster  from "react-hot-toast";
 // import Catalog_AllSection from "./Catalog_page/page";
 // import Product_Overview_AllSection from "./PDP_page/page";
 // import Catalog_tshirt_page from "./catalog_tshirt_page/page";
@@ -17,7 +18,6 @@ export default function page() {
     <div>
       {/* <Product_Overview_AllSection /> */}
       {/* <Catalog_AllSection /> */}
-      <Navbar />
       {/* <Catalog_AllSection /> */}
       {/* <Product_Overview_AllSection /> */}
       {/* <Catalog_tshirt_page /> */}

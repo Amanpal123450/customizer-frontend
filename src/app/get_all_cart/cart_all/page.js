@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from 'react-hot-toast';
 
 const FetchCartItems11 = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -15,7 +16,7 @@ const FetchCartItems11 = () => {
     if (token) {
       router.push("/order");
     } else {
-      alert("Please login to proceed to checkout.");
+      toast("Please login to proceed to checkout.");
       router.push("/login");
     }
   };
@@ -26,7 +27,7 @@ const FetchCartItems11 = () => {
     if (token) {
       try {
         const res = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/fetchAllCartItems",
+          "https://backend-customizer.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -60,7 +61,7 @@ const FetchCartItems11 = () => {
     if (token) {
       try {
         const res = await fetch(
-          `https://e-com-customizer.onrender.com/api/v1/removeFromCart/${
+          `https://backend-customizer.onrender.com/api/v1/removeFromCart/${
             item.productId || item._id
           }`,
           {
@@ -76,21 +77,21 @@ const FetchCartItems11 = () => {
         console.log("Removed from cart:", data);
 
         if (res.ok) {
-          alert("Item removed successfully.");
+          toast.success("Item removed successfully.");
           fetchCartItems();
         } else {
-          alert("Failed to remove item.");
+          toast.error("Failed to remove item.");
         }
       } catch (error) {
         console.error("Error removing item:", error);
-        alert("Error removing item. Please try again.");
+        toast.error("Error removing item. Please try again.");
       }
     } else {
       let guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
       guestCart = guestCart.filter((cartItem) => cartItem._id !== item._id);
       localStorage.setItem("guest_cart", JSON.stringify(guestCart));
       setCartItems(guestCart);
-      alert("Item removed from cart.");
+      toast.success("Item removed from cart.");
     }
   };
 
@@ -104,7 +105,7 @@ const FetchCartItems11 = () => {
     if (token) {
       try {
         const res = await fetch(
-          `https://e-com-customizer.onrender.com/api/v1/updateCartQuantity/${id}`,
+          `https://backend-customizer.onrender.com/api/v1/updateCartQuantity/${id}`,
           {
             method: "PUT",
             headers: {
@@ -124,11 +125,11 @@ const FetchCartItems11 = () => {
         setCartItems(updatedItems);
         } else {
           console.error("Failed to update quantity on server");
-          alert("Failed to update quantity. Please try again.");
+          toast.error("Failed to update quantity. Please try again.");
         }
       } catch (err) {
         console.error("Error updating quantity:", err);
-        alert("Error updating quantity. Please try again.");
+        toast.error("Error updating quantity. Please try again.");
       }
     } else {
       let guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];

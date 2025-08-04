@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const CartPaymentPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -13,7 +15,8 @@ const CartPaymentPage = () => {
   const [loading, setLoading] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("online"); // "online" or "cod"
   const [placingOrder, setPlacingOrder] = useState(false);
-  
+  const navigation = useRouter();
+
   const [address, setAddress] = useState({
     fullName: "",
     phone: "",
@@ -31,13 +34,13 @@ const CartPaymentPage = () => {
     const fetchCart = async () => {
       try {
         const res = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/fetchAllCartItems",
+          "https://backend-customizer.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         const data = await res.json();
-
+        console.log(data);
         if (data.success) {
           setCartItems(data.cartItems);
 
@@ -54,7 +57,7 @@ const CartPaymentPage = () => {
     const fetchAddresses = async () => {
       try {
         const res = await fetch(
-          `https://e-com-customizer.onrender.com/api/v1/getAllAddresses`,
+          `https://backend-customizer.onrender.com/api/v1/getAllAddresses`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -94,14 +97,14 @@ const CartPaymentPage = () => {
 
     try {
       const res = await fetch(
-        `https://e-com-customizer.onrender.com/api/v1/getSingleAddress/${addressId}`,
+        `https://backend-customizer.onrender.com/api/v1/getSingleAddress/${addressId}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       const data = await res.json();
-      
+
       if (res.ok) {
         setSelecte(addressId);
       }
@@ -125,21 +128,24 @@ const CartPaymentPage = () => {
   const createAddress = async () => {
     const token = localStorage.getItem("user_token");
     try {
-      const res = await fetch("https://e-com-customizer.onrender.com/api/v1/createAddress", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(address),
-      });
+      const res = await fetch(
+        "https://backend-customizer.onrender.com/api/v1/createAddress",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(address),
+        }
+      );
 
       const data = await res.json();
       if (data.success) {
-        alert("Address saved successfully");
+        toast.success("Address saved successfully");
         // Refresh addresses
         const addressRes = await fetch(
-          `https://e-com-customizer.onrender.com/api/v1/getAllAddresses`,
+          `https://backend-customizer.onrender.com/api/v1/getAllAddresses`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -148,18 +154,18 @@ const CartPaymentPage = () => {
         setSavedAddresses(addressData?.data || []);
         setShowAddressForm(false);
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.error("Error creating address:", error);
-      alert("Failed to save address");
+      toast.error("Failed to save address");
     }
   };
 
   // Handle COD Order Placement
   const handleCodOrder = async () => {
     if (!selectedAddressId) {
-      alert("Please select a delivery address");
+      toast("Please select a delivery address");
       return;
     }
 
@@ -167,32 +173,40 @@ const CartPaymentPage = () => {
     const token = localStorage.getItem("user_token");
 
     try {
-      const res = await fetch("https://e-com-customizer.onrender.com/api/v1/payment/cod-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          products: cartItems.map((item) => item._id),
-          amount: totalAmount,
-          addressId: selectedAddressId,
-        }),
-      });
+      const res = await fetch(
+        "https://backend-customizer.onrender.com/api/v1/payment/cod-order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            products: cartItems.map((item) => ({
+              productId: item.productId, // ✅ productId use karo
+              quantity: item.quantity,
+            })),
+            amount: totalAmount,
+            addressId: selectedAddressId,
+          }),
+        }
+      );
 
       const data = await res.json();
-      
-      if (data.success) {
-        alert(`Order placed successfully! Order ID: ${data.orderId}`);
-        // Redirect to success page or order details
-        window.location.href = `/orders/${data.orderId}`;
+
+      if (res.ok) {
+        toast.success(`Order placed successfully! Order ID: ${data.orderId}`);
+        
+        
+        navigation.push("/orderhistory");
       } else {
-        alert(data.message || "Failed to place order");
+        toast.error(data.message || "Failed to place order");
       }
-    } catch (error) {
-      console.error("Error placing COD order:", error);
-      alert("Failed to place order. Please try again.");
-    } finally {
+    }catch (error) {
+  console.error("Error placing COD order:", error); // ✅ Show full error in console
+  toast.error(error.message || "Failed to place order. Please try again."); // ✅ Show proper error message
+}
+ finally {
       setPlacingOrder(false);
     }
   };
@@ -254,7 +268,8 @@ const CartPaymentPage = () => {
                     <option value="">Select a saved address</option>
                     {savedAddresses.map((addr) => (
                       <option key={addr._id} value={addr._id}>
-                        {addr.address}, {addr.city}, {addr.state} - {addr.pincode}
+                        {addr.address}, {addr.city}, {addr.state} -{" "}
+                        {addr.pincode}
                       </option>
                     ))}
                   </select>
@@ -380,7 +395,7 @@ const CartPaymentPage = () => {
                 </span>
                 Payment Method
               </h2>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
                   <input
@@ -392,12 +407,19 @@ const CartPaymentPage = () => {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                     className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                   />
-                  <label htmlFor="online" className="ml-3 flex items-center cursor-pointer flex-1">
+                  <label
+                    htmlFor="online"
+                    className="ml-3 flex items-center cursor-pointer flex-1"
+                  >
                     <div className="flex items-center">
                       <span className="text-2xl mr-3">💳</span>
                       <div>
-                        <p className="font-medium text-gray-900">Online Payment</p>
-                        <p className="text-sm text-gray-600">Pay securely with card/UPI/wallet</p>
+                        <p className="font-medium text-gray-900">
+                          Online Payment
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Pay securely with card/UPI/wallet
+                        </p>
                       </div>
                     </div>
                   </label>
@@ -413,12 +435,19 @@ const CartPaymentPage = () => {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                     className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                   />
-                  <label htmlFor="cod" className="ml-3 flex items-center cursor-pointer flex-1">
+                  <label
+                    htmlFor="cod"
+                    className="ml-3 flex items-center cursor-pointer flex-1"
+                  >
                     <div className="flex items-center">
                       <span className="text-2xl mr-3">💰</span>
                       <div>
-                        <p className="font-medium text-gray-900">Cash on Delivery</p>
-                        <p className="text-sm text-gray-600">Pay when your order is delivered</p>
+                        <p className="font-medium text-gray-900">
+                          Cash on Delivery
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Pay when your order is delivered
+                        </p>
                       </div>
                     </div>
                   </label>
@@ -442,8 +471,12 @@ const CartPaymentPage = () => {
                     className="flex justify-between items-center p-4 border border-gray-200 rounded-lg"
                   >
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{item.title}</h3>
-                      <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                      <h3 className="font-medium text-gray-900">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        Quantity: {item.quantity}
+                      </p>
                     </div>
                     <div className="text-right">
                       <p className="font-medium text-gray-900">₹{item.price}</p>
@@ -460,8 +493,10 @@ const CartPaymentPage = () => {
           {/* Right Column - Price Summary & Action */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Price Details</h3>
-              
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Price Details
+              </h3>
+
               <div className="space-y-3 pb-4 border-b border-gray-200">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal ({cartItems.length} items)</span>
@@ -472,7 +507,7 @@ const CartPaymentPage = () => {
                   <span className="text-green-600">Free</span>
                 </div>
               </div>
-              
+
               <div className="flex justify-between text-lg font-semibold text-gray-900 mt-4 mb-6">
                 <span>Total Amount</span>
                 <span>₹{totalAmount}</span>

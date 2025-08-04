@@ -15,7 +15,7 @@ export default function WishlistPage() {
        
 
         const res = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/fetchAllWishlistItem",
+          "https://backend-customizer.onrender.com/api/v1/fetchAllWishlistItem",
           {
             headers: {
               Authorization: `Bearer ${token}`,

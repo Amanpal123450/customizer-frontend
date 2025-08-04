@@ -1,8 +1,41 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import "./news.css";
+import { toast } from "react-hot-toast";
+
 
 export default function Newsletter() {
+
+    const [email, setEmail] = useState("");
+  const [status, setStatus] = useState({ type: "", message: "" });
+
+  const handleSubscribe = async () => {
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setStatus({ type: "error", message: "Please enter a valid email address." });
+      return;
+    }
+
+    try {
+      const res = await fetch("https://backend-customizer.onrender.com/api/v1/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus({ type: "success", message: "You've successfully subscribed!" });
+        toast.success("You've successfully subscribed")
+        setEmail("");
+      } else {
+        setStatus({ type: "error", message: data.message || "Something went wrong." });
+      }
+    } catch (err) {
+      setStatus({ type: "error", message: "Server error. Please try again later." });
+    }
+  };
+
   return (
     <section className="mt-14">
       <div className="relative w-full h-[370px] sm:h-[420px] lg:h-[400px] overflow-hidden group">
@@ -33,11 +66,16 @@ export default function Newsletter() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center mt-6 w-full max-w-[450px] gap-2 sm:gap-0">
             <input
-              type="text"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="E-mail"
               className="w-full px-4 py-2 text-black outline-0 bg-gray-100 border border-gray-300"
             />
-            <button className="bg-[#3559C7] text-white px-6 py-2 w-full sm:w-auto">
+             <button
+              onClick={()=>handleSubscribe()}
+              className="bg-[#3559C7] text-white px-6 py-2 w-full sm:w-auto"
+            >
               SUBSCRIBE
             </button>
           </div>

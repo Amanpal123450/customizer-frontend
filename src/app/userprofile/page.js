@@ -32,7 +32,7 @@ const User_profile_dero = () => {
         }
 
         const response = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/getUserDetail",
+          "https://backend-customizer.onrender.com/api/v1/getUserDetail",
           {
             method: "GET",
             headers: {
@@ -162,7 +162,7 @@ const User_profile_dero = () => {
   const userName =
     userData?.name || userData?.fullName || userData?.firstName || "User";
   const userEmail = userData?.email || "user@example.com";
-  const thumbnail = userData?.thumbnail || "https://via.placeholder.com/150";
+  const thumbnail = userData?.thumbnail ;
   const userInitials = getUserInitials(userName);
 
   return (
@@ -240,6 +240,7 @@ const User_profile_dero = () => {
             >
               <ShoppingBag className="w-5 h-5 text-gray-500 mr-3" />
               <span className="text-gray-700 font-medium">Order History</span>
+
             </button>
 
             <button

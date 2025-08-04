@@ -3,13 +3,15 @@
 
 import { useEffect, useState } from "react";
 import CheckoutForm from "../CheckoutForm/page"; // or adjust based on your structure
+import { toast } from "react-hot-toast";
+
 
 const OrderPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 const token = localStorage.getItem("user_token");
   if(!token){
-     alert("login")
+    toast.success("login")
   }
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const token = localStorage.getItem("user_token");
       try {
         const token = localStorage.getItem("user_token");
 
-        const res = await fetch("https://e-com-customizer.onrender.com/api/v1/fetchAllCartItems", {
+        const res = await fetch("https://backend-customizer.onrender.com/api/v1/fetchAllCartItems", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -38,7 +40,7 @@ const token = localStorage.getItem("user_token");
 
   const handleRemove = async (itemId) => {
     try {
-      const res = await fetch(`https://e-com-customizer.onrender.com/api/v1/removeFromCart/${itemId}`, {
+      const res = await fetch(`https://backend-customizer.onrender.com/api/v1/removeFromCart/${itemId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

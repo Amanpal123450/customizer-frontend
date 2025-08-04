@@ -3,6 +3,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import { toast } from "react-hot-toast";
+
 
 export default function PopularPro() {
   const [products, setProducts] = useState([]);
@@ -47,14 +49,14 @@ export default function PopularPro() {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/totalProduct"
+          "https://backend-customizer.onrender.com/api/v1/totalProduct"
         );
         const data = await res.json();
 
         const filteredProducts = (data.AllProduct || []).filter(
           (product) => product.subCategory?.title === "T-Shirts"
         );
-// product.subCategory?.title === "T-Shirts"
+        // product.subCategory?.title === "T-Shirts"
         setProducts(filteredProducts);
         console.log(data);
         // setProducts(data.AllProduct || []);
@@ -75,7 +77,7 @@ export default function PopularPro() {
       // ✅ Logged-in Cart
       try {
         const res = await fetch(
-          `https://e-com-customizer.onrender.com/api/v1/addToCart/${item._id}`,
+          `https://backend-customizer.onrender.com/api/v1/addToCart/${item._id}`,
           {
             method: "POST",
             headers: {
@@ -87,8 +89,8 @@ export default function PopularPro() {
 
         const data = await res.json();
         console.log("Server Cart:", data);
-        if (!res.ok) {
-          alert(data.message || "Item added to cart successfully");
+        if (res.ok) {
+          toast.success(data.message || "Item added to cart successfully");
         }
       } catch (error) {
         console.error("Error adding to server cart:", error);
@@ -96,18 +98,15 @@ export default function PopularPro() {
     } else {
       // ✅ Guest Cart (localStorage)
       let guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
-      console.log("guestCart", guestCart);
 
-      // check if item already exists
-      const already = guestCart.find((items) => items.id === item);
+      const already = guestCart.find((cartItem) => cartItem._id === item._id);
 
       if (!already) {
-        // guestCart.push({ item, quantity: 1 });
-        guestCart.push(item);
+        guestCart.push({ ...item, quantity: 1 }); // ✅ add quantity
         localStorage.setItem("guest_cart", JSON.stringify(guestCart));
-        alert("Item added to local cart");
+        toast.success("Item added to local cart");
       } else {
-        alert("Item already in local cart");
+        toast.error("Item already in local cart");
       }
     }
   };
@@ -120,7 +119,7 @@ export default function PopularPro() {
       // ✅ Logged-in user: send API request
       try {
         const res = await fetch(
-          `https://e-com-customizer.onrender.com/api/v1/addToWishlist/${item._id}`,
+          `https://backend-customizer.onrender.com/api/v1/addToWishlist/${item._id}`,
           {
             method: "POST",
             headers: {
@@ -133,13 +132,13 @@ export default function PopularPro() {
         const data = await res.json();
 
         if (res.ok) {
-          alert("Item added to Wishlist successfully");
+          toast.success("Item added to Wishlist successfully");
         } else {
-          alert(data.message || "Failed to add item to Wishlist");
+          toast.error(data.message || "Failed to add item to Wishlist");
         }
       } catch (error) {
         console.error("Error adding to wishlist:", error);
-        alert("Something went wrong!");
+        toast.error("Something went wrong!");
       }
     } else {
       // ✅ Guest wishlist: store in localStorage
@@ -152,9 +151,9 @@ export default function PopularPro() {
       if (!alreadyExists) {
         guestWishlist.push(item);
         localStorage.setItem("guest_wishlist", JSON.stringify(guestWishlist));
-        alert("Item added to local wishlist");
+        toast.success("Item added to local wishlist");
       } else {
-        alert("Item already in local wishlist");
+        toast.success("Item already in local wishlist");
       }
     }
   }

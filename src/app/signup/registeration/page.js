@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -58,33 +60,33 @@ const Signup = () => {
     e.preventDefault();
 
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.password || !formData.address || !formData.city || !formData.state || !formData.Pincode) {
-    alert("Please fill in all the required fields.");
+    toast.error("Please fill in all the required fields.");
     return;
   }
 
   const pincodeRegex = /^[0-9]{6}$/;
 if (!pincodeRegex.test(formData.Pincode)) {
-  alert("Please enter a valid 6-digit pincode.");
+  toast.error("Please enter a valid 6-digit pincode.");
   return;
 }
 
   // Email validation using RegExp
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(formData.email)) {
-    alert("Please enter a valid email address.");
+    toast.error("Please enter a valid email address.");
     return;
   }
 
   // Password validation (at least 6 characters)
   if (formData.password.length < 6) {
-    alert("Password should be at least 6 characters long.");
+    toast.error("Password should be at least 6 characters long.");
     return;
   }
 
   // Phone number validation (basic)
   const phoneRegex = /^[0-9]{10}$/;
   if (!phoneRegex.test(formData.phone)) {
-    alert("Please enter a valid 10-digit phone number.");
+    toast.error("Please enter a valid 10-digit phone number.");
     return;
   }
 
@@ -102,7 +104,7 @@ if (!pincodeRegex.test(formData.Pincode)) {
   };
 
   try {
-    const res = await fetch("https://e-com-customizer.onrender.com/api/v1/signuP", {
+    const res = await fetch("https://backend-customizer.onrender.com/api/v1/signuP", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,13 +116,13 @@ if (!pincodeRegex.test(formData.Pincode)) {
 
     if (res.ok) {
        console.log("Signup Response:", data);
-    alert(data.message || "Signup successful!")
+    toast.success(data.message || "Signup successful!")
       navigation.push("/login");
     }
    
   } catch (error) {
     console.error("Signup error:", error);
-    alert("Something went wrong.");
+    toast.error("Something went wrong.");
   }
   };
 

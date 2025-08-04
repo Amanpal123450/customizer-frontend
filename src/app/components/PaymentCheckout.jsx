@@ -32,13 +32,13 @@ function PaymentCheckout() {
       try {
         setLoading(true);
         const res = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/fetchAllCartItems",
+          "https://backend-customizer.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         const data = await res.json();
-
+   console.log(data)
         if (data.success) {
           const total = data.cartItems.reduce((acc, item) => {
             return acc + (item.price || 0) * (item.quantity || 1);
@@ -47,7 +47,7 @@ function PaymentCheckout() {
 
           // Create Payment Intent
           const paymentRes = await fetch(
-            "https://e-com-customizer.onrender.com/api/v1/payment/checkout",
+            "https://backend-customizer.onrender.com/api/v1/payment/checkout",
             {
               method: "POST",
               headers: {
@@ -228,16 +228,18 @@ const CheckoutForm = ({ id, totalp }) => {
         const token = localStorage.getItem("user_token");
 
         const res = await fetch(
-          "https://e-com-customizer.onrender.com/api/v1/fetchAllCartItems",
+          "https://backend-customizer.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         const data = await res.json();
-        console.log("hkghjgjhghgjg",data)
+       
         if (data.success) {
+           console.log("fetchAllCartItems==",data) 
+
           const verifyRes = await fetch(
-            "https://e-com-customizer.onrender.com/api/v1/payment/verifySignature",
+            "https://backend-customizer.onrender.com/api/v1/payment/verifySignature",
             {
               method: "POST",
               headers: {
@@ -248,7 +250,10 @@ const CheckoutForm = ({ id, totalp }) => {
                 paymentIntentId: paymentIntent.id,
                 addressId: id,
                 amount: totalp,
-                products: data.cartItems.map((item) => item.productId),
+                products: data.cartItems.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
               }),
             }
           );
