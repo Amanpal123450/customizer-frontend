@@ -25,7 +25,7 @@ const OrderHistoryPage = () => {
         throw new Error("Please login to view your orders");
       }
 
-      const response = await fetch('https://ruwa-backend.onrender.com/api/v1/getOrderHistory', {
+      const response = await fetch('https://backend-customizer-1.onrender.com/api/v1/getOrderHistory', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

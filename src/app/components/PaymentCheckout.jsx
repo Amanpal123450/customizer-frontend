@@ -32,7 +32,7 @@ function PaymentCheckout() {
       try {
         setLoading(true);
         const res = await fetch(
-          "https://ruwa-backend.onrender.com/api/v1/fetchAllCartItems",
+          "https://backend-customizer-1.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -47,7 +47,7 @@ function PaymentCheckout() {
 
           // Create Payment Intent
           const paymentRes = await fetch(
-            "https://ruwa-backend.onrender.com/api/v1/payment/checkout",
+            "https://backend-customizer-1.onrender.com/api/v1/payment/checkout",
             {
               method: "POST",
               headers: {
@@ -228,7 +228,7 @@ const CheckoutForm = ({ id, totalp }) => {
         const token = localStorage.getItem("user_token");
 
         const res = await fetch(
-          "https://ruwa-backend.onrender.com/api/v1/fetchAllCartItems",
+          "https://backend-customizer-1.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -239,7 +239,7 @@ const CheckoutForm = ({ id, totalp }) => {
            console.log("fetchAllCartItems==",data) 
 
           const verifyRes = await fetch(
-            "https://ruwa-backend.onrender.com/api/v1/payment/verifySignature",
+            "https://backend-customizer-1.onrender.com/api/v1/payment/verifySignature",
             {
               method: "POST",
               headers: {

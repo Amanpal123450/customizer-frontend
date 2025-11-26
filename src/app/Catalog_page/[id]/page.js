@@ -29,7 +29,7 @@ const Catalog = () => {
         const fetchColor = async () => {
             try {
 
-                const res = await fetch('https://ruwa-backend.onrender.com/api/v1/get/color');
+                const res = await fetch('https://backend-customizer-1.onrender.com/api/v1/get/color');
                 const data = await res.json();
                 setColor(data.data);
                 console.log(data.data)
@@ -51,7 +51,7 @@ const Catalog = () => {
                 setError(null);
 
                 const res = await fetch(
-                    `https://ruwa-backend.onrender.com/api/v1/subCategoryPageDetails/${id}`
+                    `https://backend-customizer-1.onrender.com/api/v1/subCategoryPageDetails/${id}`
                 );
 
                 if (!res.ok) {
@@ -83,7 +83,7 @@ const Catalog = () => {
         if (token) {
             try {
                 const res = await fetch(
-                    `https://ruwa-backend.onrender.com/api/v1/addToCart/${item._id}`,
+                    `https://backend-customizer-1.onrender.com/api/v1/addToCart/${item._id}`,
                     {
                         method: "POST",
                         headers: {
@@ -124,7 +124,7 @@ const Catalog = () => {
         if (token) {
             try {
                 const res = await fetch(
-                    `https://ruwa-backend.onrender.com/api/v1/addToWishlist/${item._id}`,
+                    `https://backend-customizer-1.onrender.com/api/v1/addToWishlist/${item._id}`,
                     {
                         method: "POST",
                         headers: {

@@ -15,7 +15,7 @@ const FitnessProducts = () => {
     const fetchSubCategoryDetails = async () => {
       try {
         const res = await fetch(
-          `https://ruwa-backend.onrender.com/api/v1/subCategoryPageDetails/${id}`
+          `https://backend-customizer-1.onrender.com/api/v1/subCategoryPageDetails/${id}`
         );
         if (!res.ok) throw new Error("Failed to fetch subcategory details");
 

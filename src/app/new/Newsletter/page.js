@@ -16,7 +16,7 @@ export default function Newsletter() {
     }
 
     try {
-      const res = await fetch("https://ruwa-backend.onrender.com/api/v1/subscribe", {
+      const res = await fetch("https://backend-customizer-1.onrender.com/api/v1/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

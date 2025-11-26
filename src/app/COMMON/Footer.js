@@ -26,7 +26,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("https://ruwa-backend.onrender.com/api/v1/showAllCategory");
+        const res = await fetch("https://backend-customizer-1.onrender.com/api/v1/showAllCategory");
         const data = await res.json();
         setCategories(data.data || []);
       } catch (err) {
@@ -43,7 +43,7 @@ export default function Footer() {
       for (const cat of categories) {
         try {
           const res = await fetch(
-            `https://ruwa-backend.onrender.com/api/v1/fetchAllSubCategoryOfCategory/${cat._id}`
+            `https://backend-customizer-1.onrender.com/api/v1/fetchAllSubCategoryOfCategory/${cat._id}`
           );
           const data = await res.json();
           subs[cat.title] = data.categoryDetails?.subCategory || [];

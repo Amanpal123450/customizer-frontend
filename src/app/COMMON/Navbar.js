@@ -81,7 +81,7 @@ export default function Navbar() {
 
     const fetchAllCategories = async () => {
       try {
-        const res = await fetch("https://ruwa-backend.onrender.com/api/v1/showAllCategory");
+        const res = await fetch("https://backend-customizer-1.onrender.com/api/v1/showAllCategory");
         const data = await res.json();
         setShowCategories(data.data || []);
       } catch (error) {
@@ -91,7 +91,7 @@ export default function Navbar() {
 
     const fetchBrands = async () => {
       try {
-        const res = await fetch("https://ruwa-backend.onrender.com/api/v1/totalBrands");
+        const res = await fetch("https://backend-customizer-1.onrender.com/api/v1/totalBrands");
         const json = await res.json();
         if (res.ok) {
           const activeBrands = json.filter((brand) => brand.active);

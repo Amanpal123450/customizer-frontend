@@ -104,7 +104,7 @@ if (!pincodeRegex.test(formData.Pincode)) {
   };
 
   try {
-    const res = await fetch("https://ruwa-backend.onrender.com/api/v1/signuP", {
+    const res = await fetch("https://backend-customizer-1.onrender.com/api/v1/signuP", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
