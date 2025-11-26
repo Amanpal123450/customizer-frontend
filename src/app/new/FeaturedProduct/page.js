@@ -32,7 +32,7 @@ export default function FeaturePro() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://backend-customizer.onrender.com/api/v1/totalProduct");
+        const res = await fetch("https://ruwa-backend.onrender.com/api/v1/totalProduct");
         const data = await res.json();
         const filteredProducts = (data.AllProduct || []).filter(
           (product) => product.subCategory?.title === "Cap"
@@ -53,7 +53,7 @@ export default function FeaturePro() {
     if (token) {
       try {
         const res = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/addToCart/${item._id}`,
+          `https://ruwa-backend.onrender.com/api/v1/addToCart/${item._id}`,
           {
             method: "POST",
             headers: {
@@ -88,7 +88,7 @@ export default function FeaturePro() {
     if (token) {
       try {
         const res = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/addToWishlist/${item._id}`,
+          `https://ruwa-backend.onrender.com/api/v1/addToWishlist/${item._id}`,
           {
             method: "POST",
             headers: {

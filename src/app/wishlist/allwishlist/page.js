@@ -15,7 +15,7 @@ export default function WishlistPage() {
        
 
         const res = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/fetchAllWishlistItem",
+          "https://ruwa-backend.onrender.com/api/v1/fetchAllWishlistItem",
           {
             headers: {
               Authorization: `Bearer ${token}`,

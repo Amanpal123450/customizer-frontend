@@ -39,7 +39,7 @@ const Login = () => {
 //   if (token) {
 //     // ✅ Logged-in Cart
 //     try {
-//       const res = await fetch(`https://backend-customizer.onrender.com/api/v1/addToCart/${id}`, {
+//       const res = await fetch(`https://ruwa-backend.onrender.com/api/v1/addToCart/${id}`, {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ const Login = () => {
   }
 
   try {
-    const res = await fetch("https://backend-customizer.onrender.com/api/v1/login", {
+    const res = await fetch("https://ruwa-backend.onrender.com/api/v1/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -102,7 +102,7 @@ const Login = () => {
 
     if (guestCart.length > 0) {
       for (const item of guestCart) {
-        await fetch(`https://backend-customizer.onrender.com/api/v1/addToCart/${item._id}`, {
+        await fetch(`https://ruwa-backend.onrender.com/api/v1/addToCart/${item._id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +121,7 @@ const guestWishlist = JSON.parse(localStorage.getItem("guest_wishlist")) || [];
 
 if (guestWishlist.length > 0) {
   for (const item of guestWishlist) {
-    await fetch(`https://backend-customizer.onrender.com/api/v1/addToWishlist/${item._id}`, {
+    await fetch(`https://ruwa-backend.onrender.com/api/v1/addToWishlist/${item._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

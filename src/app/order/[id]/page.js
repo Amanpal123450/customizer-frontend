@@ -19,7 +19,7 @@ const token = localStorage.getItem("user_token");
       try {
         const token = localStorage.getItem("user_token");
 
-        const res = await fetch("https://backend-customizer.onrender.com/api/v1/fetchAllCartItems", {
+        const res = await fetch("https://ruwa-backend.onrender.com/api/v1/fetchAllCartItems", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const token = localStorage.getItem("user_token");
 
   const handleRemove = async (itemId) => {
     try {
-      const res = await fetch(`https://backend-customizer.onrender.com/api/v1/removeFromCart/${itemId}`, {
+      const res = await fetch(`https://ruwa-backend.onrender.com/api/v1/removeFromCart/${itemId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

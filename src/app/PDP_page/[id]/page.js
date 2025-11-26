@@ -38,7 +38,7 @@ export default function productDetailPage() {
   if (token) {
     // ✅ For logged-in users
     try {
-      const res = await fetch(`https://backend-customizer.onrender.com/api/v1/addToCart/${item._id}`, {
+      const res = await fetch(`https://ruwa-backend.onrender.com/api/v1/addToCart/${item._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export default function productDetailPage() {
   useEffect(() => {
     const fetchproduct = async () => {
       try {
-        const res = await fetch(`https://backend-customizer.onrender.com/api/v1/getproductById/${id}`);
+        const res = await fetch(`https://ruwa-backend.onrender.com/api/v1/getproductById/${id}`);
         const data = await res.json();
         console.log("single",data.data)
 
@@ -114,7 +114,7 @@ export default function productDetailPage() {
 
     const fetchproducts = async () => {
       try {
-        const res = await fetch("https://backend-customizer.onrender.com/api/v1/totalproduct");
+        const res = await fetch("https://ruwa-backend.onrender.com/api/v1/totalproduct");
         const data = await res.json();
         console.log(data)
         setproducts4(data.Allproduct || []);

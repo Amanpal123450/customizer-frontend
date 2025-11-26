@@ -34,7 +34,7 @@ const CartPaymentPage = () => {
     const fetchCart = async () => {
       try {
         const res = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/fetchAllCartItems",
+          "https://ruwa-backend.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -57,7 +57,7 @@ const CartPaymentPage = () => {
     const fetchAddresses = async () => {
       try {
         const res = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/getAllAddresses`,
+          `https://ruwa-backend.onrender.com/api/v1/getAllAddresses`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -97,7 +97,7 @@ const CartPaymentPage = () => {
 
     try {
       const res = await fetch(
-        `https://backend-customizer.onrender.com/api/v1/getSingleAddress/${addressId}`,
+        `https://ruwa-backend.onrender.com/api/v1/getSingleAddress/${addressId}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
@@ -129,7 +129,7 @@ const CartPaymentPage = () => {
     const token = localStorage.getItem("user_token");
     try {
       const res = await fetch(
-        "https://backend-customizer.onrender.com/api/v1/createAddress",
+        "https://ruwa-backend.onrender.com/api/v1/createAddress",
         {
           method: "POST",
           headers: {
@@ -145,7 +145,7 @@ const CartPaymentPage = () => {
         toast.success("Address saved successfully");
         // Refresh addresses
         const addressRes = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/getAllAddresses`,
+          `https://ruwa-backend.onrender.com/api/v1/getAllAddresses`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -174,7 +174,7 @@ const CartPaymentPage = () => {
 
     try {
       const res = await fetch(
-        "https://backend-customizer.onrender.com/api/v1/payment/cod-order",
+        "https://ruwa-backend.onrender.com/api/v1/payment/cod-order",
         {
           method: "POST",
           headers: {

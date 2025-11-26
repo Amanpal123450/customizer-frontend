@@ -32,7 +32,7 @@ const User_profile_dero = () => {
         }
 
         const response = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/getUserDetail",
+          "https://ruwa-backend.onrender.com/api/v1/getUserDetail",
           {
             method: "GET",
             headers: {

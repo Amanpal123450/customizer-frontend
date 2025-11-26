@@ -32,7 +32,7 @@ export default function ProductPage() {
     const fetchColor = async () => {
       try {
 
-        const res = await fetch('https://backend-customizer.onrender.com/api/v1/get/color', param);
+        const res = await fetch('https://ruwa-backend.onrender.com/api/v1/get/color', param);
         const data = await res.json();
         setColor(data.data);
         console.log(data.data)
@@ -50,7 +50,7 @@ export default function ProductPage() {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/totalProduct"
+          "https://ruwa-backend.onrender.com/api/v1/totalProduct"
         );
         const data = await res.json();
         console.log(data);
@@ -76,7 +76,7 @@ export default function ProductPage() {
     if (token) {
       // ✅ Logged-in user: send API request
       try {
-        const res = await fetch(`https://backend-customizer.onrender.com/api/v1/addToWishlist/${item._id}`, {
+        const res = await fetch(`https://ruwa-backend.onrender.com/api/v1/addToWishlist/${item._id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export default function ProductPage() {
       // ✅ Logged-in Cart
       try {
         const res = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/addToCart/${item._id}`,
+          `https://ruwa-backend.onrender.com/api/v1/addToCart/${item._id}`,
           {
             method: "POST",
             headers: {

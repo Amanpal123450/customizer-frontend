@@ -27,7 +27,7 @@ const FetchCartItems11 = () => {
     if (token) {
       try {
         const res = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/fetchAllCartItems",
+          "https://ruwa-backend.onrender.com/api/v1/fetchAllCartItems",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const FetchCartItems11 = () => {
     if (token) {
       try {
         const res = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/removeFromCart/${
+          `https://ruwa-backend.onrender.com/api/v1/removeFromCart/${
             item.productId || item._id
           }`,
           {
@@ -105,7 +105,7 @@ const FetchCartItems11 = () => {
     if (token) {
       try {
         const res = await fetch(
-          `https://backend-customizer.onrender.com/api/v1/updateCartQuantity/${id}`,
+          `https://ruwa-backend.onrender.com/api/v1/updateCartQuantity/${id}`,
           {
             method: "PUT",
             headers: {

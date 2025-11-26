@@ -69,7 +69,7 @@ const UserProfilePage = () => {
       // Simulating localStorage access for demo
       const token = localStorage.getItem("user_token");
       const response = await fetch(
-        "https://backend-customizer.onrender.com/api/v1/getOrderHistory",
+        "https://ruwa-backend.onrender.com/api/v1/getOrderHistory",
         {
           method: "GET",
           headers: {
@@ -136,7 +136,7 @@ const UserProfilePage = () => {
       const token = localStorage.getItem("user_token");
 
       const response = await fetch(
-        "https://backend-customizer.onrender.com/api/v1/change-password",
+        "https://ruwa-backend.onrender.com/api/v1/change-password",
         {
           method: "PUT",
           headers: {
@@ -173,7 +173,7 @@ const UserProfilePage = () => {
       try {
         const yourAuthToken = localStorage.getItem("user_token");
         const response = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/getUser",
+          "https://ruwa-backend.onrender.com/api/v1/getUser",
           {
             method: "GET",
             headers: {
@@ -208,7 +208,7 @@ const UserProfilePage = () => {
         const token = localStorage.getItem("user_token");
 
         const res = await fetch(
-          "https://backend-customizer.onrender.com/api/v1/getAllAddresses",
+          "https://ruwa-backend.onrender.com/api/v1/getAllAddresses",
           {
             method: "GET",
             headers: {
@@ -258,7 +258,7 @@ const UserProfilePage = () => {
     try {
       const token = localStorage.getItem("user_token");
       const response = await fetch(
-        "https://backend-customizer.onrender.com/api/v1/updateDetails/",
+        "https://ruwa-backend.onrender.com/api/v1/updateDetails/",
         {
           method: "PUT",
           headers: {
@@ -358,8 +358,8 @@ const UserProfilePage = () => {
 
       const token = localStorage.getItem("user_token");
       const url = isEditingAddress
-        ? `https://backend-customizer.onrender.com/api/v1/updateAddress/${editingAddress._id}`
-        : "https://backend-customizer.onrender.com/api/v1/createAddress";
+        ? `https://ruwa-backend.onrender.com/api/v1/updateAddress/${editingAddress._id}`
+        : "https://ruwa-backend.onrender.com/api/v1/createAddress";
 
       const method = isEditingAddress ? "PUT" : "POST";
 
@@ -409,7 +409,7 @@ const UserProfilePage = () => {
     try {
       const token = localStorage.getItem("user_token");
       const response = await fetch(
-        `https://backend-customizer.onrender.com/api/v1/deleteAddress/${addressId}`,
+        `https://ruwa-backend.onrender.com/api/v1/deleteAddress/${addressId}`,
         {
           method: "DELETE",
           headers: {
@@ -453,7 +453,7 @@ const UserProfilePage = () => {
 
       const token = localStorage.getItem("user_token");
 
-      const res = await fetch("https://backend-customizer.onrender.com/api/v1/updateThumbnail", {
+      const res = await fetch("https://ruwa-backend.onrender.com/api/v1/updateThumbnail", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
