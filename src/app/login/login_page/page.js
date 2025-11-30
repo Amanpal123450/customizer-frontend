@@ -15,7 +15,7 @@ const Login = () => {
     password: "",
     captchaInput: "",
   });
-  const navigation =useRouter("/")
+  const navigation =useRouter()
 
   const [captchaCode, setCaptchaCode] = useState("");
 
@@ -71,10 +71,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (formData.captchaInput !== captchaCode) {
-    toast.error("Invalid captcha");
-    return;
-  }
+  if (formData.captchaInput.toUpperCase() !== captchaCode.toUpperCase()) {
+  toast.error("Invalid captcha");
+  return;
+}
+
 
   try {
     const res = await fetch("https://backend-customizer-1.onrender.com/api/v1/login", {
