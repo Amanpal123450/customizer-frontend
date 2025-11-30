@@ -239,7 +239,7 @@ const CheckoutForm = ({ id, totalp }) => {
            console.log("fetchAllCartItems==",data) 
 
           const verifyRes = await fetch(
-            "https://backend-customizer-1.onrender.com/api/v1/payment/verifySignature",
+            "http://localhost:4000/api/v1/payment/verifySignature",
             {
               method: "POST",
               headers: {
@@ -249,7 +249,7 @@ const CheckoutForm = ({ id, totalp }) => {
               body: JSON.stringify({
                 paymentIntentId: paymentIntent.id,
                 addressId: id,
-                amount: totalp,
+                amount:  Number(totalp),
                 products: data.cartItems.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
