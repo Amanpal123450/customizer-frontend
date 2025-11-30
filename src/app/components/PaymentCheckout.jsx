@@ -239,7 +239,7 @@ const CheckoutForm = ({ id, totalp }) => {
            console.log("fetchAllCartItems==",data) 
 
           const verifyRes = await fetch(
-            "http://localhost:4000/api/v1/payment/verifySignature",
+            "https://backend-customizer-1.onrender.com/api/v1/payment/verifySignature",
             {
               method: "POST",
               headers: {
